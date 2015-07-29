@@ -7,6 +7,8 @@ import com.codename1.io.Util;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.util.Calendar;
+import java.util.concurrent.TimeUnit;
 
 public class Reminder implements Externalizable {
 
@@ -47,6 +49,17 @@ public class Reminder implements Externalizable {
     public String toString() {
         if (period) return String.valueOf(hour) + ":" + String.format("%02d", minute) + " PM";
         else return String.valueOf(hour) + ":" + String.format("%02d", minute) + " AM";
+    }
+
+    //get the next time in milliseconds that this reminder should trigger
+    public long getTime() {
+
+        if (!enabled) return 0;
+        if (!repeating[0] && !repeating[Calendar.getInstance().get(Calendar.DAY_OF_WEEK)]) return 0;
+
+        if (period) return hour*1000*60*60+minute*1000*60+1000*60*60*12;
+        else return hour*1000*60*60+minute*1000*60;
+
     }
 
     //save this reminder

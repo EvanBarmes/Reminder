@@ -57,6 +57,7 @@ public class ReminderView implements View {
         form.addComponent(textField);
 
         picker = new TimeSpinner();
+        picker.setMinuteStep(1);
         form.addComponent(picker);
 
         checkBox0 = new CheckBox("Just Once");
